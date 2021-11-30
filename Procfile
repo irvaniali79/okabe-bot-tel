@@ -1,1 +1,1 @@
-web: python okabe-rintaro-bot.py
+worker: python okabe-rintaro-bot.py
