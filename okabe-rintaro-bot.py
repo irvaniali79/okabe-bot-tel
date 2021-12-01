@@ -96,7 +96,6 @@ def voice(message):
   bot.register_next_step_handler(message , text2voice)
 
 def text2voice(message):
-    language = 'en'
     voiceobj = gtts.gTTS(text=message.text ,  lang= 'en', slow=False)
     voiceobj.save(f"voice_{message.chat.id}.ogg")
     voiceobj = open(f"voice_{message.chat.id}.ogg", 'rb')
