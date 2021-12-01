@@ -1,6 +1,6 @@
 import telebot
 import random
-import khayyam
+from khayyam import JalaliDatetime
 import qrcode
 import gtts
 
@@ -42,10 +42,10 @@ def game(message):
 
 def geuess(message):
     if int(message.text) > number:
-        bot.reply_to(message, "greater!")
+        bot.reply_to(message, "samller!")
         bot.register_next_step_handler(message , geuess)
     elif int(message.text) < number :
-        bot.reply_to(message, "smaller!")
+        bot.reply_to(message, "greater!")
         bot.register_next_step_handler(message , geuess)
     elif int(message.text) == number:
         bot.reply_to(message, "you guess right")
@@ -81,8 +81,8 @@ def agecalculator(message):
 
 @bot.message_handler(commands=['qrcode'])
 def text2qrcode(message):
-  bot.reply_to(message,"Enter your text :") 
-  bot.register_next_step_handler(message ,toqrcode)
+    bot.reply_to(message,"Enter your text :") 
+    bot.register_next_step_handler(message ,toqrcode)
 
 def toqrcode(message):
     img = qrcode.make(message.text) 
@@ -92,8 +92,8 @@ def toqrcode(message):
     
 @bot.message_handler(commands=['voice'])
 def voice(message):
-  bot.reply_to(message,"please enter your text :") 
-  bot.register_next_step_handler(message , text2voice)
+    bot.reply_to(message,"please enter your text :") 
+    bot.register_next_step_handler(message , text2voice)
 
 def text2voice(message):
     voiceobj = gtts.gTTS(text=message.text ,  lang= 'en', slow=False)
