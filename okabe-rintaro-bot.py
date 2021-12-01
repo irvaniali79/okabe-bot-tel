@@ -2,7 +2,7 @@ import telebot
 import random
 import khayyam
 import qrcode
-import gTTS
+import gtts
 
 bot = telebot.TeleBot('2140486942:AAFJgBA0y10ZHkbM-7VIIfUm6B3-WMBnsAk')
 number=0
