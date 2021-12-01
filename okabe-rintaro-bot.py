@@ -76,7 +76,7 @@ def age(message):
 def agecalculator(message):
     date = message.text.split('/')
     dif = JalaliDatetime.now()-JalaliDatetime(date[0],date[1],date[2])
-    bot.reply_to(message,dif)
+    bot.reply_to(message,dif[0]/365)
 
 
 @bot.message_handler(commands=['qrcode'])
@@ -85,9 +85,9 @@ def text2qrcode(message):
     bot.register_next_step_handler(message ,toqrcode)
 
 def toqrcode(message):
-    img = qrcode.make(message.text) 
-    img.save('qrcode.png')
-    photo = open('qrcode.png', 'rb')
+    img = qrcode.make(message) 
+    img.save(f"qrcode_{message.chat.id}.png")
+    photo = open(f"qrcode_{message.chat.id}.png", 'rb')
     bot.send_photo(message.chat.id, photo)
     
 @bot.message_handler(commands=['voice'])
