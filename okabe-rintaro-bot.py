@@ -2,6 +2,7 @@ import telebot
 import random
 import khayyam
 import qrcode
+import gTTS
 
 bot = telebot.TeleBot('2140486942:AAFJgBA0y10ZHkbM-7VIIfUm6B3-WMBnsAk')
 number=0
@@ -24,7 +25,7 @@ def help(message):
     /maxindex\n
     how old are you? \n
     /age\n
-    Sentence2voice\n
+    Text2voice\n
     /voice\n
     Text2QRcode\n
     /qrcode\n
@@ -89,17 +90,16 @@ def toqrcode(message):
     photo = open('qrcode.png', 'rb')
     bot.send_photo(message.chat.id, photo)
     
-@bot.message_handler(commands=['TextToVoice'])
-def game(message):
+@bot.message_handler(commands=['voice'])
+def voice(message):
   bot.reply_to(message,"please enter your text :") 
   bot.register_next_step_handler(message , text2voice)
 
 def text2voice(message):
-    mytext = message.text
     language = 'en'
-    myobj = gTTS(text=mytext , lang=language , slow=False)
-    myobj.save("voice.ogg")
-    myobj = open('voice.ogg', 'rb')
-    bot.send_voice(message.chat.id, myobj)
-    
+    voiceobj = gtts.gTTS(text=message.text ,  lang= 'en', slow=False)
+    voiceobj.save(f"voice_{message.chat.id}.ogg")
+    voiceobj = open(f"voice_{message.chat.id}.ogg", 'rb')
+    bot.send_voice(message.chat.id,voiceobj)
+
 bot.infinity_polling()
