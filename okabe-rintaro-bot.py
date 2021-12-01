@@ -88,5 +88,18 @@ def toqrcode(message):
     img.save('qrcode.png')
     photo = open('qrcode.png', 'rb')
     bot.send_photo(message.chat.id, photo)
+    
+@bot.message_handler(commands=['TextToVoice'])
+def game(message):
+  bot.reply_to(message,"please enter your text :") 
+  bot.register_next_step_handler(message , text2voice)
 
+def text2voice(message):
+    mytext = message.text
+    language = 'en'
+    myobj = gTTS(text=mytext , lang=language , slow=False)
+    myobj.save("voice.ogg")
+    myobj = open('voice.ogg', 'rb')
+    bot.send_voice(message.chat.id, myobj)
+    
 bot.infinity_polling()
