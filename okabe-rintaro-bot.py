@@ -52,10 +52,10 @@ def geuess(message):
     if message.text=='again':
         game(bot.send_message(message.chat.id,""))
     elif int(message.text) > number:
-        bot.reply_to(message, "samller!",replay_markup=btn)
+        bot.reply_to(message, "samller!",reply_markup=btn)
         bot.register_next_step_handler(message,geuess)
     elif int(message.text) < number :
-        bot.reply_to(message, "greater!",replay_markup=btn)
+        bot.reply_to(message, "greater!",reply_markup=btn)
         bot.register_next_step_handler(message , geuess)
     elif int(message.text) == number:
         bot.reply_to(message, "you guess right")
