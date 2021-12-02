@@ -40,25 +40,26 @@ def game(message):
     global number,btn
     number = random.randint(0,100)
     bot.reply_to(message,"Guess a number Please between 0 to 100 ") 
-    btn = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    content = telebot.types.KeyboardButton('new game')
-    btn.add(content)
-    bot.register_next_step_handler(message , geuess)
-    btn=None
-    
-def geuess(message):
 
-    if message.text=='new game':
+    btn = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    content = telebot.types.KeyboardButton('again')
+    btn.add(content)
+
+    bot.register_next_step_handler(message , geuess)
+   
+def geuess(message):
+    global btn
+    if message.text=='again':
         game(bot.send_message(message.chat.id,""))
     elif int(message.text) > number:
-        bot.reply_to(message, "samller!")
-        bot.register_next_step_handler(message , geuess)
+        bot.reply_to(message, "samller!",replay_markup=btn)
+        bot.register_next_step_handler(message,geuess)
     elif int(message.text) < number :
-        bot.reply_to(message, "greater!")
+        bot.reply_to(message, "greater!",replay_markup=btn)
         bot.register_next_step_handler(message , geuess)
     elif int(message.text) == number:
         bot.reply_to(message, "you guess right")
-
+        btn=None
 
 
 @bot.message_handler(commands=['max'])
