@@ -7,6 +7,8 @@ import gtts
 bot = telebot.TeleBot('2140486942:AAFJgBA0y10ZHkbM-7VIIfUm6B3-WMBnsAk')
 number=0
 
+btn=None
+
 
 @bot.message_handler(commands=['start'])
 def register(message):
@@ -35,13 +37,20 @@ def help(message):
 
 @bot.message_handler(commands=['game'])
 def game(message):
-    global number
+    global number,btn
     number = random.randint(0,100)
     bot.reply_to(message,"Guess a number Please between 0 to 100 ") 
+    btn = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    content = telebot.types.KeyboardButton('new game')
+    btn.add(content)
     bot.register_next_step_handler(message , geuess)
-
+    btn=None
+    
 def geuess(message):
-    if int(message.text) > number:
+
+    if message.text=='new game':
+        game(bot.send_message(message.chat.id,""))
+    elif int(message.text) > number:
         bot.reply_to(message, "samller!")
         bot.register_next_step_handler(message , geuess)
     elif int(message.text) < number :
@@ -49,6 +58,8 @@ def geuess(message):
         bot.register_next_step_handler(message , geuess)
     elif int(message.text) == number:
         bot.reply_to(message, "you guess right")
+
+
 
 @bot.message_handler(commands=['max'])
 def getarray(message):
