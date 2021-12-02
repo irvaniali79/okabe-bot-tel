@@ -89,7 +89,7 @@ def age(message):
 def agecalculator(message):
     date = message.text.split('/')
     dif = JalaliDatetime.now()-JalaliDatetime(date[0],date[1],date[2])
-    bot.reply_to(message,int(str(dif).split()[0])/365)
+    bot.reply_to(message,int(str(dif).split()[0])//365)
 
 
 @bot.message_handler(commands=['qrcode'])
