@@ -50,7 +50,8 @@ def game(message):
 def geuess(message):
     global btn
     if message.text=='again':
-        game(bot.send_message(message.chat.id,""))
+        message=bot.send_message(message.chat.id,"resetting game")
+        game(message)
     elif int(message.text) > number:
         bot.reply_to(message, "samller!",reply_markup=btn)
         bot.register_next_step_handler(message,geuess)
